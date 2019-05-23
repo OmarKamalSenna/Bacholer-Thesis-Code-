@@ -1,0 +1,157 @@
+ 
+           ##################################################
+           #      AMPT (A Multi-Phase Transport) model      #
+           #               Version 1.21 (Default)           #
+           #                10/01/2008                      #
+           ##################################################
+            
+
+
+          **************************************************
+          *     |      |       _______      /  ------/     *
+          *   ----- ------     |_____|     /_/     /       *
+          *    |||    /        |_____|      /    / |       *
+          *    /| |  /_/       /_______    /_  /    |      *
+          *   / |     / /     /  /  / |        -------     *
+          *     |    / /|       /  /  |     /     |        *
+          *     |   / /  |     /  /  _|    /   -------     *
+          *                                                *
+          **************************************************
+                                HIJING                      
+                 Heavy Ion Jet INteraction Generator        
+                                  by                        
+                      X. N. Wang  and  M. Gyulassy           
+                       Lawrence Berkeley Laboratory           
+
+
+     MDCY(C221,1)   changed from              1 to              0
+     MDCY(C313,1)   changed from              1 to              0
+     MDCY(C-313,1)  changed from              0 to              0
+     MDCY(C323,1)   changed from              1 to              0
+     MDCY(C-323,1)  changed from              0 to              0
+     MDCY(C311,1)   changed from              1 to              0
+     MDCY(C-311,1)  changed from              0 to              0
+     MDCY(C1114,1)  changed from              1 to              0
+     MDCY(C2114,1)  changed from              1 to              0
+     MDCY(C2214,1)  changed from              1 to              0
+     MDCY(C2224,1)  changed from              1 to              0
+     MDCY(C-1114,1) changed from              0 to              0
+     MDCY(C-2114,1) changed from              0 to              0
+     MDCY(C-2214,1) changed from              0 to              0
+     MDCY(C-2224,1) changed from              0 to              0
+     MDCY(C213,1)   changed from              1 to              0
+     MDCY(C-213,1)  changed from              0 to              0
+     MDCY(C113,1)   changed from              1 to              0
+     MDCY(C223,1)   changed from              1 to              0
+     MDCY(C333,1)   changed from              1 to              0
+     MDCY(C111,1)   changed from              1 to              0
+     MDCY(C310,1)   changed from              1 to              0
+     MDCY(C411,1)   changed from              1 to              0
+     MDCY(C-411,1)  changed from              0 to              0
+     MDCY(C421,1)   changed from              1 to              0
+     MDCY(C-421,1)  changed from              0 to              0
+     MDCY(C431,1)   changed from              1 to              0
+     MDCY(C-431,1)  changed from              0 to              0
+     MDCY(C511,1)   changed from              1 to              0
+     MDCY(C-511,1)  changed from              0 to              0
+     MDCY(C521,1)   changed from              1 to              0
+     MDCY(C-521,1)  changed from              0 to              0
+     MDCY(C531,1)   changed from              1 to              0
+     MDCY(C-531,1)  changed from              0 to              0
+     MDCY(C3122,1)  changed from              1 to              0
+     MDCY(C-3122,1) changed from              0 to              0
+     MDCY(C3112,1)  changed from              1 to              0
+     MDCY(C-3112,1) changed from              0 to              0
+     MDCY(C3212,1)  changed from              1 to              0
+     MDCY(C-3212,1) changed from              0 to              0
+     MDCY(C3222,1)  changed from              1 to              0
+     MDCY(C-3222,1) changed from              0 to              0
+     MDCY(C3312,1)  changed from              1 to              0
+     MDCY(C-3312,1) changed from              0 to              0
+     MDCY(C3322,1)  changed from              1 to              0
+     MDCY(C-3322,1) changed from              0 to              0
+     MDCY(C3334,1)  changed from              1 to              0
+     MDCY(C-3334,1) changed from              0 to              0
+
+
+          **********************************
+
+****************
+          *                                                *
+          *         HIJING has been initialized at         *
+          *             Ecm =     200.00 GeV/n             *
+          *                                                *
+          *        for A   (197, 79) + A   (197, 79)       *
+          **************************************************
+  EVENT            1 , RUN            1
+ #impact parameter,nlop,ncolt=   12.8481798               0           9
+
+ ******** PYMAXI: summary of differential cross-section maximum search ********
+
+           ==========================================================
+           I                                      I                 I
+           I  ISUB  Subprocess name               I  Maximum value  I
+           I                                      I                 I
+           ==========================================================
+           I                                      I                 I
+           I   11   f + f' -> f + f'              I    4.9850E+00   I
+           I   12   f + fb -> f' + fb'            I    5.7342E-03   I
+           I   13   f + fb -> g + g               I    6.8549E-02   I
+           I   14   f + fb -> g + gamma           I    8.9451E-04   I
+           I   18   f + fb -> gamma + gamma       I    3.7609E-06   I
+           I   28   f + g -> f + g                I    2.2202E+01   I
+           I   29   f + g -> f + gamma            I    7.8743E-03   I
+           I   53   g + g -> f + fb               I    1.9216E-01   I
+           I   68   g + g -> g + g                I    2.5880E+01   I
+           I   81   q + qb -> Q + QB, massive     I    3.6768E-03   I
+           I   82   g + g -> Q + QB, massive      I    1.0604E-01   I
+           I                                      I                 I
+           ==========================================================
+ event=           1
+ dn(           1 )=   0.0000000000000000      dn1(           1 )=   0.0000000000000000      dn2(           1 )=   0.0000000000000000     
+ event=           1
+ dn(           2 )=   0.0000000000000000      dn1(           2 )=   0.0000000000000000      dn2(           2 )=   0.0000000000000000     
+ event=           1
+ dn(           3 )=   0.0000000000000000      dn1(           3 )=   0.0000000000000000      dn2(           3 )=   0.0000000000000000     
+ event=           1
+ dn(           4 )=   0.0000000000000000      dn1(           4 )=   0.0000000000000000      dn2(           4 )=   0.0000000000000000     
+ event=           1
+ dn(           5 )=   0.0000000000000000      dn1(           5 )=   0.0000000000000000      dn2(           5 )=   0.0000000000000000     
+ event=           1
+ dn(           6 )=   0.0000000000000000      dn1(           6 )=   0.0000000000000000      dn2(           6 )=   0.0000000000000000     
+ event=           1
+ dn(           7 )=   0.0000000000000000      dn1(           7 )=   0.0000000000000000      dn2(           7 )=   0.0000000000000000     
+ event=           1
+ dn(           8 )=   0.0000000000000000      dn1(           8 )=   0.0000000000000000      dn2(           8 )=   0.0000000000000000     
+ event=           1
+ dn(           9 )=   0.0000000000000000      dn1(           9 )=   0.0000000000000000      dn2(           9 )=   0.0000000000000000     
+ event=           1
+ dn(          10 )=   0.0000000000000000      dn1(          10 )=   1.0000000000000000      dn2(          10 )=   1.0000000000000000     
+ event=           1
+ dn(          11 )=   0.0000000000000000      dn1(          11 )=   1.0000000000000000      dn2(          11 )=   1.0000000000000000     
+ event=           1
+ dn(          12 )=   0.0000000000000000      dn1(          12 )=   1.0000000000000000      dn2(          12 )=   1.0000000000000000     
+ satisfied:EATT,NATT,B=   39400.0000             543   12.8481798    
+  
+  EVENT            2 , RUN            1
+ #impact parameter,nlop,ncolt=   5.39479446               0         598
+  in HJANA1 
+  total number of partons =          413
+  total number of gluons =          396
+  number of projectile strings =          197
+  number of target strings =          197
+  number of independent strings =           15
+  in HJANA2 
+  total number of partons =          413
+  total number of gluons =          398
+  number of projectile strings =          197
+  number of target strings =          197
+  number of independent strings =           15
+ satisfied:EATT,NATT,B=   39394.9805            4837   5.39479446    
+  
+ Mass increase in resdec():          41   1.93081200E-02          26
+ Mass increase in resdec():         150   2.23550797E-02           7
+ Mass increase in resdec():         150   2.29898691E-02           8
+omarsenna
+#  AMPT started at  Thu May 23 00:49:16 EET 2019
+#  AMPT Program finished at  Thu May 23 00:49:31 EET 2019
