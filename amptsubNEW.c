@@ -527,17 +527,24 @@ int arini_(void)
 	switch (iflg)
 	{
 	case 1:
-		return 0;
+		goto L200;
 	case 2:
-		return 0;
+		goto L200;
 	case 3:
-		arini1_();
+		goto L300;
 	}
 
 	s_wsle(&io___3);
 	do_lio(&c__9, &c__1, "IAPAR2(1) must be 1, 2, or 3", (int)28);
 	e_wsle();
 	s_stop("", (int)0);
+
+L200:
+	return 0;
+
+L300:
+	arini1_();
+
 	artord_();
 	return 0;
 }
@@ -551,10 +558,12 @@ int arini1_(void)
 
 	int f_open(olist *), s_wsle(cilist *), do_lio(int *, int *, char *, int), e_wsle(void);
 	double log(double), cosh(double), sinh(double);
+
 	static int i__, np;
 	static float vx, vy, rap, tau0, taui;
 	double ranart_(int *);
 	static float zsmear;
+
 	static cilist io___7 = {0, 6, 0, 0, 0};
 	static cilist io___8 = {0, 6, 0, 0, 0};
 	static cilist io___9 = {0, 6, 0, 0, 0};
@@ -620,15 +629,16 @@ int arini1_(void)
 				do_lio(&c__4, &c__1, (char *)&arprc_1.xmar[i__ - 1], (int)sizeof(float));
 				e_wsle();
 				rap = 1e6f;
-                vx = arprc_1.pxar[i__ - 1] / arprc_1.pear[i__ - 1];
-                vy = arprc_1.pyar[i__ - 1] / arprc_1.pear[i__ - 1];
-                arprc_1.ftar[i__ - 1] = tau0 * cosh(rap);
-                arprc_1.gxar[i__ - 1] += vx * arprc_1.ftar[i__ - 1];
-                arprc_1.gyar[i__ - 1] += vy * arprc_1.ftar[i__ - 1];
-                arprc_1.gzar[i__ - 1] = tau0 * sinh(rap);
-				
+				goto L50;
 			}
 			rap = log((arprc_1.pear[i__ - 1] + arprc_1.pzar[i__ - 1]) / (arprc_1.pear[i__ - 1] - arprc_1.pzar[i__ - 1])) * .5f;
+		L50:
+			vx = arprc_1.pxar[i__ - 1] / arprc_1.pear[i__ - 1];
+			vy = arprc_1.pyar[i__ - 1] / arprc_1.pear[i__ - 1];
+			arprc_1.ftar[i__ - 1] = tau0 * cosh(rap);
+			arprc_1.gxar[i__ - 1] += vx * arprc_1.ftar[i__ - 1];
+			arprc_1.gyar[i__ - 1] += vy * arprc_1.ftar[i__ - 1];
+			arprc_1.gzar[i__ - 1] = tau0 * sinh(rap);
 		}
 		return 0;
 	}
@@ -636,7 +646,8 @@ int arini1_(void)
 	i__1 = np;
 	for (i__ = 1; i__ <= i__1; ++i__)
 	{
-		if ((r__1 = arprc_1.pzar[i__ - 1], dabs(r__1)) >= arprc_1.pear[i__ -1])
+		if ((r__1 = arprc_1.pzar[i__ - 1], dabs(r__1)) >= arprc_1.pear[i__ -
+																	   1])
 		{
 			s_wsle(&io___15);
 			do_lio(&c__9, &c__1, " IN ARINI1", (int)10);
@@ -664,17 +675,24 @@ int arini1_(void)
 			do_lio(&c__4, &c__1, (char *)&arprc_1.xmar[i__ - 1], (int)sizeof(float));
 			e_wsle();
 			rap = 1e6f;
+			goto L100;
 		}
 		rap = log((arprc_1.pear[i__ - 1] + arprc_1.pzar[i__ - 1]) / (arprc_1.pear[i__ - 1] - arprc_1.pzar[i__ - 1])) * .5f;
+	L100:
 		vx = arprc_1.pxar[i__ - 1] / arprc_1.pear[i__ - 1];
 		vy = arprc_1.pyar[i__ - 1] / arprc_1.pear[i__ - 1];
+
 		taui = arprc_1.ftar[i__ - 1] + tau0;
 		arprc_1.ftar[i__ - 1] = taui * cosh(rap);
 		arprc_1.gxar[i__ - 1] += vx * tau0 * cosh(rap);
 		arprc_1.gyar[i__ - 1] += vy * tau0 * cosh(rap);
+
 		arprc_1.gzar[i__ - 1] = taui * sinh(rap);
-		zsmear = (float)smearz_1.smearh * (ranart_(&rndf77_1.nseed) * 2.f -1.f);
+
+		zsmear = (float)smearz_1.smearh * (ranart_(&rndf77_1.nseed) * 2.f -
+										  1.f);
 		arprc_1.gzar[i__ - 1] += zsmear;
+
 		if (arprc_1.pxar[i__ - 1] == 0.f && arprc_1.pyar[i__ - 1] == 0.f &&
 			arprc_1.pear[i__ - 1] * 2 / hparnt_1.hint1[0] > .99f && (arprc_1.itypar[i__ - 1] == 2112 || arprc_1.itypar[i__ - 1] == 2212))
 		{
@@ -1380,9 +1398,11 @@ int arindx_(int *n, int *m, float *arrin, int *indx)
 {
 
 	int i__1;
+
 	static int i__, j, l;
 	static float q;
 	static int ir, indxt;
+
 	--indx;
 	--arrin;
 
@@ -1440,7 +1460,8 @@ L20:
 	goto L10;
 }
 
-int newka_(int *icase, int *irun, int *iseed,float *dt, int *nt, int *ictrl, int *i1, int *i2, float *srt, float *pcx, float *pcy, float *pcz, int *iblock)
+int newka_(int *icase, int *irun, int *iseed,
+		   float *dt, int *nt, int *ictrl, int *i1, int *i2, float *srt, float *pcx, float *pcy, float *pcz, int *iblock)
 {
 
 	float r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8;
@@ -2417,16 +2438,7 @@ int lorntz_(int *ilo, float *b, float *pi, float *pj)
 	ga = gam * gam / (gam + 1.f);
 	if (*ilo == 1)
 	{
-		pib = pi[1] * b[1] + pi[2] * b[2] + pi[3] * b[3];
-		pjb = pj[1] * b[1] + pj[2] * b[2] + pj[3] * b[3];
-	for (i__ = 1; i__ <= 3; ++i__)
-	{
-		pi[i__] += b[i__] * (ga * pib + gam * pi[4]);
-		pj[i__] += b[i__] * (ga * pjb + gam * pj[4]);
-	}
-	pi[4] = gam * (pi[4] + pib);
-	pj[4] = gam * (pj[4] + pjb);
-	return 0;
+		goto L100;
 	}
 
 	pib = pi[1] * b[1] + pi[2] * b[2] + pi[3] * b[3];
@@ -2439,22 +2451,40 @@ int lorntz_(int *ilo, float *b, float *pi, float *pj)
 	}
 	pi[4] = gam * (pi[4] - pib);
 	pj[4] = gam * (pj[4] - pjb);
-	return 0;	
+	return 0;
+L100:
+
+	pib = pi[1] * b[1] + pi[2] * b[2] + pi[3] * b[3];
+	pjb = pj[1] * b[1] + pj[2] * b[2] + pj[3] * b[3];
+	for (i__ = 1; i__ <= 3; ++i__)
+	{
+		pi[i__] += b[i__] * (ga * pib + gam * pi[4]);
+		pj[i__] += b[i__] * (ga * pjb + gam * pj[4]);
+	}
+	pi[4] = gam * (pi[4] + pib);
+	pj[4] = gam * (pj[4] + pjb);
+	return 0;
 }
 
-int fstate_(int *iseed, float *srt, float *dm3, float *dm4,float *px, float *py, float *pz, int *iflag)
+int fstate_(int *iseed, float *srt, float *dm3, float *dm4,
+			float *px, float *py, float *pz, int *iflag)
 {
 
 	float r__1, r__2, r__3, r__4;
 
 	double sqrt(double);
-	int s_wsle(cilist *), do_lio(int *, int *, char *, int),e_wsle(void);
+	int s_wsle(cilist *), do_lio(int *, int *, char *, int),
+		e_wsle(void);
 	double log(double), cos(double), sin(double);
-	static float v1, v2, pe[4], bbb, fac, aka, ekm, ekp, pio, ptp, rsq, ptp2,rmt3, rmt4, gama, beta, ptkm, ptkp, pzkm, pzkp, ekmax, pkmax,guass, pzcms, xstar, ptkmi2, ptkpl2;
+
+	static float v1, v2, pe[4], bbb, fac, aka, ekm, ekp, pio, ptp, rsq, ptp2,
+		rmt3, rmt4, gama, beta, ptkm, ptkp, pzkm, pzkp, ekmax, pkmax,
+		guass, pzcms, xstar, ptkmi2, ptkpl2;
 	double ranart_(int *);
 	static float resten;
 	static int icount;
 	static float restms, restpz;
+
 	static cilist io___156 = {0, 1, 0, 0, 0};
 
 	--pz;
@@ -2493,28 +2523,23 @@ L50:
 	}
 	ptkmi2 = log(ranart_(&rndf77_1.nseed)) * -.24125452352231608f;
 	ptkm = sqrt(ptkmi2);
+L3:
 	v1 = ranart_(&rndf77_1.nseed);
 	v2 = ranart_(&rndf77_1.nseed);
+
 	r__1 = v1;
+
 	r__2 = v2;
 	rsq = r__1 * r__1 + r__2 * r__2;
 	if (rsq >= 1.f || rsq <= 0.f)
 	{
-		v1 = ranart_(&rndf77_1.nseed);
-		v2 = ranart_(&rndf77_1.nseed);
-		r__1 = v1;
-		r__2 = v2;
-		rsq = r__1 * r__1 + r__2 * r__2;
+		goto L3;
 	}
 	fac = sqrt(log(rsq) * -2.f / rsq);
 	guass = v1 * fac;
 	if (guass >= 5.f)
 	{
-		v1 = ranart_(&rndf77_1.nseed);
-		v2 = ranart_(&rndf77_1.nseed);
-		r__1 = v1;
-		r__2 = v2;
-		rsq = r__1 * r__1 + r__2 * r__2;
+		goto L3;
 	}
 	xstar = guass / 5.f;
 	pzkm = pkmax * xstar;
@@ -2525,14 +2550,9 @@ L50:
 
 	r__3 = ptkm;
 	ekm = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
-	if (ranart_(&rndf77_1.nseed) > aka / ekm){
-		++icount;
-	if (icount > 10)
+	if (ranart_(&rndf77_1.nseed) > aka / ekm)
 	{
-		return 0;
-	}
-	ptkmi2 = log(ranart_(&rndf77_1.nseed)) * -.24125452352231608f;
-	ptkm = sqrt(ptkmi2);
+		goto L50;
 	}
 	bbb = ranart_(&rndf77_1.nseed);
 	px[3] = ptkm * cos(pio * 2.f * bbb);
@@ -2543,40 +2563,39 @@ L50:
 	}
 	pz[3] = pzkm;
 	pe[2] = ekm;
+L150:
+	ptkpl2 = log(ranart_(&rndf77_1.nseed)) * -.27173913043478259f;
+	ptkp = sqrt(ptkpl2);
+L13:
 	v1 = ranart_(&rndf77_1.nseed);
 	v2 = ranart_(&rndf77_1.nseed);
+
 	r__1 = v1;
+
 	r__2 = v2;
 	rsq = r__1 * r__1 + r__2 * r__2;
 	if (rsq >= 1.f || rsq <= 0.f)
 	{
-        v1 = ranart_(&rndf77_1.nseed);
-        v2 = ranart_(&rndf77_1.nseed);
-        r__1 = v1;
-        r__2 = v2;
-        rsq = r__1 * r__1 + r__2 * r__2;
+		goto L13;
 	}
 	fac = sqrt(log(rsq) * -2.f / rsq);
 	guass = v1 * fac;
 	if (guass >= 3.25f)
 	{
-        v1 = ranart_(&rndf77_1.nseed);
-        v2 = ranart_(&rndf77_1.nseed);
-        r__1 = v1;
-        r__2 = v2;
-        rsq = r__1 * r__1 + r__2 * r__2;
+		goto L13;
 	}
 	xstar = guass / 3.25f;
 	pzkp = pkmax * xstar;
+
 	r__1 = aka;
+
 	r__2 = pzkp;
+
 	r__3 = ptkp;
 	ekp = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 	if (ranart_(&rndf77_1.nseed) > aka / ekp)
 	{
-        ptkpl2 = log(ranart_(&rndf77_1.nseed)) * -.27173913043478259f;
-        ptkp = sqrt(ptkpl2);
-
+		goto L150;
 	}
 	bbb = ranart_(&rndf77_1.nseed);
 	px[4] = ptkp * cos(pio * 2.f * bbb);
@@ -2592,13 +2611,7 @@ L50:
 
 	if (resten <= dabs(restpz))
 	{
-		++icount;
-	if (icount > 10)
-	{
-		return 0;
-	}
-	ptkmi2 = log(ranart_(&rndf77_1.nseed)) * -.24125452352231608f;
-	ptkm = sqrt(ptkmi2);
+		goto L50;
 	}
 
 	r__1 = resten;
@@ -2608,13 +2621,7 @@ L50:
 
 	if (restms < *dm3 + *dm4)
 	{
-		++icount;
-	if (icount > 10)
-	{
-		return 0;
-	}
-	ptkmi2 = log(ranart_(&rndf77_1.nseed)) * -.24125452352231608f;
-	ptkm = sqrt(ptkmi2);
+		goto L50;
 	}
 	ptp2 = log(ranart_(&rndf77_1.nseed)) * -.3623188405797102f;
 	ptp = sqrt(ptp2);
@@ -2623,30 +2630,34 @@ L50:
 	py[2] = ptp * sin(pio * 2.f * bbb);
 	px[1] = (px[4] + px[3] + px[2]) * -1.f;
 	py[1] = (py[4] + py[3] + py[2]) * -1.f;
+
 	r__1 = *dm3;
+
 	r__2 = px[1];
+
 	r__3 = py[1];
 	rmt3 = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
+
 	r__1 = *dm4;
+
 	r__2 = px[2];
+
 	r__3 = py[2];
 	rmt4 = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 	if (restms < rmt3 + rmt4)
 	{
-		++icount;
-	if (icount > 10)
-	{
-		return 0;
-	}
-	ptkmi2 = log(ranart_(&rndf77_1.nseed)) * -.24125452352231608f;
-	ptkm = sqrt(ptkmi2);
+		goto L50;
 	}
 
 	r__1 = restms;
+
 	r__2 = rmt3 + rmt4;
+
 	r__3 = restms;
+
 	r__4 = rmt3 - rmt4;
-	pzcms = sqrt((r__1 * r__1 - r__2 * r__2) * (r__3 * r__3 - r__4 * r__4)) /2.f / restms;
+	pzcms = sqrt((r__1 * r__1 - r__2 * r__2) * (r__3 * r__3 - r__4 * r__4)) /
+			2.f / restms;
 	if (ranart_(&rndf77_1.nseed) > .5f)
 	{
 		pz[1] = pzcms;
@@ -2658,18 +2669,27 @@ L50:
 		pz[2] = pzcms;
 	}
 	beta = restpz / resten;
+
 	r__1 = beta;
 	gama = 1.f / sqrt(1.f - r__1 * r__1);
+
 	r__1 = rmt3;
+
 	r__2 = pz[1];
 	pz[1] = pz[1] * gama + beta * gama * sqrt(r__1 * r__1 + r__2 * r__2);
+
 	r__1 = rmt4;
+
 	r__2 = pz[2];
 	pz[2] = pz[2] * gama + beta * gama * sqrt(r__1 * r__1 + r__2 * r__2);
+
 	r__1 = rmt3;
+
 	r__2 = pz[1];
 	pe[0] = sqrt(r__1 * r__1 + r__2 * r__2);
+
 	r__1 = rmt4;
+
 	r__2 = pz[2];
 	pe[1] = sqrt(r__1 * r__1 + r__2 * r__2);
 	*iflag = 1;
@@ -3200,7 +3220,9 @@ int artan1_(void)
 	float r__1, r__2, r__3;
 
 	double sqrt(double), log(double);
-	int s_wsle(cilist *), do_lio(int *, int *, char *, int),e_wsle(void);
+	int s_wsle(cilist *), do_lio(int *, int *, char *, int),
+		e_wsle(void);
+
 	static int i__, j;
 	static float y, ee;
 	static int iy;
@@ -3212,6 +3234,7 @@ int artan1_(void)
 	static int ityp;
 	static float ptot;
 	extern int luchge_(int *);
+
 	static cilist io___302 = {0, 6, 0, 0, 0};
 	static cilist io___303 = {0, 6, 0, 0, 0};
 	static cilist io___304 = {0, 6, 0, 0, 0};
@@ -3233,16 +3256,21 @@ int artan1_(void)
 
 			if (xm < .01f)
 			{
-				continue;
+				goto L200;
 			}
 
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = pz;
 			ptot = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			eta = log((ptot + pz + 1e-5f) / (ptot - pz + 1e-5f)) * .5f;
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = xm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			if (dabs(pz) >= ee)
@@ -3257,6 +3285,7 @@ int artan1_(void)
 				do_lio(&c__3, &c__1, (char *)&j, (int)sizeof(int));
 				do_lio(&c__9, &c__1, "PREC ERR", (int)8);
 				e_wsle();
+
 				s_wsle(&io___304);
 				do_lio(&c__9, &c__1, " FLAV = ", (int)8);
 				do_lio(&c__3, &c__1, (char *)&ityp, (int)sizeof(int));
@@ -3265,118 +3294,33 @@ int artan1_(void)
 				do_lio(&c__9, &c__1, " PY = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&py, (int)sizeof(float));
 				e_wsle();
+
 				s_wsle(&io___305);
 				do_lio(&c__9, &c__1, " PZ = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pz, (int)sizeof(float));
 				do_lio(&c__9, &c__1, " EE = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&ee, (int)sizeof(float));
 				e_wsle();
+
 				s_wsle(&io___306);
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&xm, (int)sizeof(float));
 				e_wsle();
+
+				goto L200;
 			}
 			dxmt = xmt - xm;
 			y = log((ee + pz) / (ee - pz)) * .5f;
 
 			if (dabs(y) >= 10.f)
 			{
-				if (y < -1.f || y > 1.f)
-			{
-                continue;
-			}
-			if (dxmt >= 2.5f || dxmt == 0.f)
-			{
-                continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (ityp == 211)
-			{
-				arana1_1.dm1pip[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -211)
-			{
-				arana1_1.dm1pim[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 2212)
-			{
-				arana1_1.dmt1pr[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -2212)
-			{
-				arana1_1.dmt1pb[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 321)
-			{
-				arana1_1.dmt1kp[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -321)
-			{
-				arana1_1.dm1km[imt - 1] += 1.f / xmt;
+				goto L100;
 			}
 
-			if (ityp == 130)
-			{
-				arana1_1.dm1k0s[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 3122)
-			{
-				arana1_1.dmt1la[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -3122)
-			{
-				arana1_1.dmt1lb[imt - 1] += 1.f / xmt;
-                }
-			}
 			if (dabs(eta) >= 10.f)
 			{
-				if (y < -1.f || y > 1.f)
-			{
-                continue;
+				goto L100;
 			}
-			if (dxmt >= 2.5f || dxmt == 0.f)
-			{
-                continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (ityp == 211)
-			{
-				arana1_1.dm1pip[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -211)
-			{
-				arana1_1.dm1pim[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 2212)
-			{
-				arana1_1.dmt1pr[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -2212)
-			{
-				arana1_1.dmt1pb[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 321)
-			{
-				arana1_1.dmt1kp[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -321)
-			{
-				arana1_1.dm1km[imt - 1] += 1.f / xmt;
-			}
-
-			if (ityp == 130)
-			{
-				arana1_1.dm1k0s[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 3122)
-			{
-				arana1_1.dmt1la[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -3122)
-			{
-				arana1_1.dmt1lb[imt - 1] += 1.f / xmt;
-                }
-            }
 			iy = (int)((y + 10.f) / .4f) + 1;
 			ieta = (int)((eta + 10.f) / .4f) + 1;
 			if (ityp < -1000)
@@ -3462,6 +3406,57 @@ int artan1_(void)
 			{
 				arana1_1.dy1phi[iy - 1] += 1.f;
 			}
+
+		L100:
+			if (y < -1.f || y > 1.f)
+			{
+				goto L200;
+			}
+			if (dxmt >= 2.5f || dxmt == 0.f)
+			{
+				goto L200;
+			}
+			imt = (int)(dxmt / .05f) + 1;
+			if (ityp == 211)
+			{
+				arana1_1.dm1pip[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -211)
+			{
+				arana1_1.dm1pim[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == 2212)
+			{
+				arana1_1.dmt1pr[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -2212)
+			{
+				arana1_1.dmt1pb[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == 321)
+			{
+				arana1_1.dmt1kp[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -321)
+			{
+				arana1_1.dm1km[imt - 1] += 1.f / xmt;
+			}
+
+			if (ityp == 130)
+			{
+				arana1_1.dm1k0s[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == 3122)
+			{
+				arana1_1.dmt1la[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -3122)
+			{
+				arana1_1.dmt1lb[imt - 1] += 1.f / xmt;
+			}
+		L200:
+
+			;
 		}
 	}
 	return 0;
@@ -3472,8 +3467,11 @@ int artan2_(void)
 
 	int i__1, i__2;
 	float r__1, r__2, r__3;
+
 	double sqrt(double), log(double);
-	int s_wsle(cilist *), do_lio(int *, int *, char *, int),e_wsle(void);
+	int s_wsle(cilist *), do_lio(int *, int *, char *, int),
+		e_wsle(void);
+
 	static int i__, j;
 	static float y, ee;
 	static int iy;
@@ -3485,11 +3483,13 @@ int artan2_(void)
 	static int ityp;
 	static float ptot;
 	extern int luchge_(int *);
+
 	static cilist io___323 = {0, 6, 0, 0, 0};
 	static cilist io___324 = {0, 6, 0, 0, 0};
 	static cilist io___325 = {0, 6, 0, 0, 0};
 	static cilist io___326 = {0, 6, 0, 0, 0};
 	static cilist io___327 = {0, 6, 0, 0, 0};
+
 	i__1 = run_1.num;
 	for (j = 1; j <= i__1; ++j)
 	{
@@ -3502,17 +3502,23 @@ int artan2_(void)
 			pz = arprc1_1.pz1[i__ + j * 150001 - 150002];
 			ee = arprc1_1.ee1[i__ + j * 150001 - 150002];
 			xm = arprc1_1.xm1[i__ + j * 150001 - 150002];
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = xm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
+
 			if (xm < .01f)
 			{
-				continue;
+				goto L200;
 			}
 
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = pz;
 			ptot = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			eta = log((ptot + pz + 1e-5f) / (ptot - pz + 1e-5f)) * .5f;
@@ -3528,6 +3534,7 @@ int artan2_(void)
 				do_lio(&c__3, &c__1, (char *)&j, (int)sizeof(int));
 				do_lio(&c__9, &c__1, "PREC ERR", (int)8);
 				e_wsle();
+
 				s_wsle(&io___325);
 				do_lio(&c__9, &c__1, " FLAV = ", (int)8);
 				do_lio(&c__3, &c__1, (char *)&ityp, (int)sizeof(int));
@@ -3536,118 +3543,32 @@ int artan2_(void)
 				do_lio(&c__9, &c__1, " PY = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&py, (int)sizeof(float));
 				e_wsle();
+
 				s_wsle(&io___326);
 				do_lio(&c__9, &c__1, " PZ = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pz, (int)sizeof(float));
 				do_lio(&c__9, &c__1, " EE = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&ee, (int)sizeof(float));
 				e_wsle();
+
 				s_wsle(&io___327);
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&xm, (int)sizeof(float));
 				e_wsle();
+
+				goto L200;
 			}
 			dxmt = xmt - xm;
 			y = log((ee + pz) / (ee - pz)) * .5f;
 
 			if (dabs(y) >= 10.f)
 			{
-                if (y < -1.f || y > 1.f)
-			{
-				continue;
-			}
-			if (dxmt >= 2.5f || dxmt == 0.f)
-			{
-				continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (ityp == 211)
-			{
-				arana2_1.dm2pip[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -211)
-			{
-				arana2_1.dm2pim[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 2212)
-			{
-				arana2_1.dmt2pr[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -2212)
-			{
-				arana2_1.dmt2pb[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 321)
-			{
-				arana2_1.dmt2kp[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -321)
-			{
-				arana2_1.dm2km[imt - 1] += 1.f / xmt;
-			}
-
-			if (ityp == 130)
-			{
-				arana2_1.dm2k0s[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 3122)
-			{
-				arana2_1.dmt2la[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -3122)
-			{
-				arana2_1.dmt2lb[imt - 1] += 1.f / xmt;
-                }
+				goto L100;
 			}
 
 			if (dabs(eta) >= 10.f)
 			{
-				if (y < -1.f || y > 1.f)
-			{
-				continue;
-			}
-			if (dxmt >= 2.5f || dxmt == 0.f)
-			{
-				continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (ityp == 211)
-			{
-				arana2_1.dm2pip[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -211)
-			{
-				arana2_1.dm2pim[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 2212)
-			{
-				arana2_1.dmt2pr[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -2212)
-			{
-				arana2_1.dmt2pb[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 321)
-			{
-				arana2_1.dmt2kp[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -321)
-			{
-				arana2_1.dm2km[imt - 1] += 1.f / xmt;
-			}
-
-			if (ityp == 130)
-			{
-				arana2_1.dm2k0s[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == 3122)
-			{
-				arana2_1.dmt2la[imt - 1] += 1.f / xmt;
-			}
-			if (ityp == -3122)
-			{
-				arana2_1.dmt2lb[imt - 1] += 1.f / xmt;
-			}
+				goto L100;
 			}
 			iy = (int)((y + 10.f) / .4f) + 1;
 			ieta = (int)((eta + 10.f) / .4f) + 1;
@@ -3732,6 +3653,57 @@ int artan2_(void)
 			{
 				arana2_1.dy2phi[iy - 1] += 1.f;
 			}
+
+		L100:
+			if (y < -1.f || y > 1.f)
+			{
+				goto L200;
+			}
+			if (dxmt >= 2.5f || dxmt == 0.f)
+			{
+				goto L200;
+			}
+			imt = (int)(dxmt / .05f) + 1;
+			if (ityp == 211)
+			{
+				arana2_1.dm2pip[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -211)
+			{
+				arana2_1.dm2pim[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == 2212)
+			{
+				arana2_1.dmt2pr[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -2212)
+			{
+				arana2_1.dmt2pb[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == 321)
+			{
+				arana2_1.dmt2kp[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -321)
+			{
+				arana2_1.dm2km[imt - 1] += 1.f / xmt;
+			}
+
+			if (ityp == 130)
+			{
+				arana2_1.dm2k0s[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == 3122)
+			{
+				arana2_1.dmt2la[imt - 1] += 1.f / xmt;
+			}
+			if (ityp == -3122)
+			{
+				arana2_1.dmt2lb[imt - 1] += 1.f / xmt;
+			}
+		L200:
+
+			;
 		}
 	}
 	return 0;
@@ -3741,11 +3713,15 @@ int artout_(int *nevnt)
 {
 
 	static char fmt_333[] = "(2(f12.5,1x))";
+
 	float r__1, r__2;
 	olist o__1;
+
 	int f_open(olist *), s_wsfe(cilist *), do_fio(int *, char *, int), e_wsfe(void), s_wsle(cilist *), do_lio(int *, int *, char *, int), e_wsle(void);
+
 	static int i__;
 	static float ymid, scale1, scale2;
+
 	static cilist io___337 = {0, 30, 0, fmt_333, 0};
 	static cilist io___338 = {0, 31, 0, fmt_333, 0};
 	static cilist io___339 = {0, 32, 0, fmt_333, 0};
@@ -4620,6 +4596,7 @@ int hjana1_(void)
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 				e_wsle();
+				goto L200;
 			}
 			rap = log((pe + pz) / (pe - pz)) * .5f;
 
@@ -4633,20 +4610,7 @@ int hjana1_(void)
 			iy = (int)(dabs(rap) / .2f) + 1;
 			if (iy > 50)
 			{
-                imt = (int)(dxmt / .05f) + 1;
-                if (rap > 1.f || rap <= -1.f)
-			{
-				continue;
-			}
-			if (imt > 200)
-			{
-				continue;
-			}
-			dmyp1[imt - 1] += 1.f / xmt;
-			if (ityp == 21)
-			{
-				dmyg1[imt - 1] += 1.f / xmt;
-			}
+				goto L100;
 			}
 			dyp1[iy - 1] += 1.f;
 			deyp1[iy - 1] += xmt;
@@ -4655,6 +4619,24 @@ int hjana1_(void)
 				dyg1[iy - 1] += 1.f;
 				deyg1[iy - 1] += xmt;
 			}
+		L100:
+			imt = (int)(dxmt / .05f) + 1;
+			if (rap > 1.f || rap <= -1.f)
+			{
+				goto L200;
+			}
+			if (imt > 200)
+			{
+				goto L200;
+			}
+			dmyp1[imt - 1] += 1.f / xmt;
+			if (ityp == 21)
+			{
+				dmyg1[imt - 1] += 1.f / xmt;
+			}
+		L200:
+
+			;
 		}
 	}
 	i__1 = hparnt_1.ihnt2[2];
@@ -4695,6 +4677,7 @@ int hjana1_(void)
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 				e_wsle();
+				goto L400;
 			}
 			rap = log((pe + pz) / (pe - pz)) * .5f;
 
@@ -4708,20 +4691,7 @@ int hjana1_(void)
 			iy = (int)(dabs(rap) / .2f) + 1;
 			if (iy > 50)
 			{
-				if (rap > 1.f || rap <= -1.f)
-			{
-				continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (imt > 200)
-			{
-				continue;
-			}
-			dmyp1[imt - 1] += 1.f / xmt;
-			if (ityp == 21)
-			{
-				dmyg1[imt - 1] += 1.f / xmt;
-			}
+				goto L300;
 			}
 			dyp1[iy - 1] += 1.f;
 			deyp1[iy - 1] += xmt;
@@ -4730,6 +4700,24 @@ int hjana1_(void)
 				dyg1[iy - 1] += 1.f;
 				deyg1[iy - 1] += xmt;
 			}
+		L300:
+			if (rap > 1.f || rap <= -1.f)
+			{
+				goto L400;
+			}
+			imt = (int)(dxmt / .05f) + 1;
+			if (imt > 200)
+			{
+				goto L400;
+			}
+			dmyp1[imt - 1] += 1.f / xmt;
+			if (ityp == 21)
+			{
+				dmyg1[imt - 1] += 1.f / xmt;
+			}
+		L400:
+
+			;
 		}
 	}
 	i__1 = hjjet2_1.nsg;
@@ -4770,30 +4758,21 @@ int hjana1_(void)
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 				e_wsle();
+				goto L600;
 			}
 			rap = log((pe + pz) / (pe - pz)) * .5f;
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = pm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			dxmt = xmt - pm;
 			iy = (int)(dabs(rap) / .2f) + 1;
 			if (iy > 50)
 			{
-				if (rap > 1.f || rap <= -1.f)
-			{
-				continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (imt > 200)
-			{
-				continue;
-			}
-			dmyp1[imt - 1] += 1.f / xmt;
-			if (ityp == 21)
-			{
-				dmyg1[imt - 1] += 1.f / xmt;
-			}
+				goto L500;
 			}
 			dyp1[iy - 1] += 1.f;
 			deyp1[iy - 1] += xmt;
@@ -4802,6 +4781,24 @@ int hjana1_(void)
 				dyg1[iy - 1] += 1.f;
 				deyg1[iy - 1] += xmt;
 			}
+		L500:
+			if (rap > 1.f || rap <= -1.f)
+			{
+				goto L600;
+			}
+			imt = (int)(dxmt / .05f) + 1;
+			if (imt > 200)
+			{
+				goto L600;
+			}
+			dmyp1[imt - 1] += 1.f / xmt;
+			if (ityp == 21)
+			{
+				dmyg1[imt - 1] += 1.f / xmt;
+			}
+		L600:
+
+			;
 		}
 	}
 	i__1 = hparnt_1.ihnt2[0];
@@ -4816,10 +4813,13 @@ int hjana1_(void)
 
 		if (ir > 50 || ir < 1)
 		{
-			continue;
+			goto L601;
 		}
 		dnrpj1[ir - 1] += 1.f;
 		dnrtt1[ir - 1] += 1.f;
+	L601:
+
+		;
 	}
 	i__1 = hparnt_1.ihnt2[2];
 	for (i__ = 1; i__ <= i__1; ++i__)
@@ -4832,10 +4832,13 @@ int hjana1_(void)
 		ir = (int)(yr / .2f) + 1;
 		if (ir > 50 || ir < 1)
 		{
-			continue;
+			goto L602;
 		}
 		dnrtg1[ir - 1] += 1.f;
 		dnrtt1[ir - 1] += 1.f;
+	L602:
+
+		;
 	}
 	i__1 = hjjet2_1.nsg;
 	for (i__ = 1; i__ <= i__1; ++i__)
@@ -4850,10 +4853,13 @@ int hjana1_(void)
 		ir = (int)(yr / .2f) + 1;
 		if (ir > 50 || ir < 1)
 		{
-			continue;
+			goto L603;
 		}
 		dnrin1[ir - 1] += 1.f;
 		dnrtt1[ir - 1] += 1.f;
+	L603:
+
+		;
 	}
 	i__1 = para1_1.mul;
 	for (i__ = 1; i__ <= i__1; ++i__)
@@ -4888,29 +4894,38 @@ int hjana1_(void)
 			do_lio(&c__9, &c__1, " XM = ", (int)6);
 			do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 			e_wsle();
+			goto L800;
 		}
 		rap = log((pe + pz) / (pe - pz)) * .5f;
+
 		r__1 = px;
+
 		r__2 = py;
+
 		r__3 = pm;
 		xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 		dxmt = xmt - pm;
 		iy = (int)(dabs(rap) / .2f) + 1;
 		if (iy > 50)
 		{
-			if (rap > 1.f || rap <= -1.f)
+			goto L700;
+		}
+		dyg1c[iy - 1] += 1.f;
+		deyg1c[iy - 1] += xmt;
+	L700:
+		if (rap > 1.f || rap <= -1.f)
 		{
-			continue;
+			goto L800;
 		}
 		imt = (int)(dxmt / .05f) + 1;
 		if (imt > 50)
 		{
-			continue;
+			goto L800;
 		}
-        dmyg1c[imt - 1] += 1.f / xmt;
-		}
-		dyg1c[iy - 1] += 1.f;
-		deyg1c[iy - 1] += xmt;
+		dmyg1c[imt - 1] += 1.f / xmt;
+	L800:
+
+		;
 	}
 
 	i__1 = hparnt_1.ihnt2[0];
@@ -5024,29 +5039,43 @@ int hjan1a_(void)
 		isrun = arevt_1.iarun;
 		++iw;
 	}
+
 	i__1 = para1_1.mul;
 	for (i__ = 1; i__ <= i__1; ++i__)
 	{
-		igx = (int)((d__1 = prec2_1.gx5[i__ - 1], (float)abs(d__1)) /.2f) +1;
+		igx = (int)((d__1 = prec2_1.gx5[i__ - 1], (float)abs(d__1)) /
+						.2f) +
+			  1;
+
 		if (igx > 50 || igx < 1)
 		{
-            igy = (int)((d__1 = prec2_1.gy5[i__ - 1], (float)abs(d__1)) /.2f) +1;
-            if (igy > 50 || igy < 1)
-            {
-                d__1 = prec2_1.ft5[i__ - 1];
-                d__2 = prec2_1.gz5[i__ - 1];
-                it = (int)((float)sqrt(d__1 * d__1 - d__2 * d__2) / .2f) + 1;
-                if (it > 50 || it < 1)
-                {
-                    continue;
-                }
-                    dtg1a[it - 1] += 1.f;
-            }
-                    dgyg1a[igy - 1] += 1.f;	
-        }
-                    dgxg1a[igx - 1] += 1.f;
-    }
+			goto L100;
+		}
+		dgxg1a[igx - 1] += 1.f;
+	L100:
+		igy = (int)((d__1 = prec2_1.gy5[i__ - 1], (float)abs(d__1)) /.2f) +1;
+		if (igy > 50 || igy < 1)
+		{
+			goto L200;
+		}
+		dgyg1a[igy - 1] += 1.f;
+	L200:
+
+		d__1 = prec2_1.ft5[i__ - 1];
+
+		d__2 = prec2_1.gz5[i__ - 1];
+		it = (int)((float)sqrt(d__1 * d__1 - d__2 * d__2) / .2f) + 1;
+		if (it > 50 || it < 1)
+		{
+			goto L300;
+		}
+		dtg1a[it - 1] += 1.f;
+	L300:
+
+		;
+	}
 	hjan1b_();
+
 	return 0;
 }
 
@@ -5054,10 +5083,13 @@ int hjan1b_(void)
 {
 
 	static int iw = 0;
+
 	int i__1;
 	float r__1, r__2;
 	double d__1, d__2;
+
 	double sqrt(double);
+
 	static int i__, j, k;
 	static float r0;
 	static int ir, it;
@@ -5115,17 +5147,24 @@ int hjan1b_(void)
 		ir = (int)(r0 / .2f) + 1;
 		if (ir > 50 || ir < 1)
 		{
-			d__1 = prec2_1.ft5[i__ - 1];
-            d__2 = prec2_1.gz5[i__ - 1];
-            tau7 = sqrt((float)(d__1 * d__1 - d__2 * d__2));
-            it = (int)(tau7 / .2f) + 1;
-            if (it > 50 || it < 1)
-            {
-                continue
-            }
-            dtg1b[it - 1] += 1.f;
+			goto L100;
 		}
-		dnrg1b[ir - 1] += 1.f;	
+		dnrg1b[ir - 1] += 1.f;
+	L100:
+
+		d__1 = prec2_1.ft5[i__ - 1];
+
+		d__2 = prec2_1.gz5[i__ - 1];
+		tau7 = sqrt((float)(d__1 * d__1 - d__2 * d__2));
+		it = (int)(tau7 / .2f) + 1;
+		if (it > 50 || it < 1)
+		{
+			goto L200;
+		}
+		dtg1b[it - 1] += 1.f;
+	L200:
+
+		;
 	}
 
 	return 0;
@@ -5133,12 +5172,17 @@ int hjan1b_(void)
 
 int hjana2_(void)
 {
+
 	static int iw = 0;
+
 	int i__1, i__2;
 	float r__1, r__2, r__3;
 	double d__1, d__2;
-	int s_wsle(cilist *), do_lio(int *, int *, char *, int),e_wsle(void);
+
+	int s_wsle(cilist *), do_lio(int *, int *, char *, int),
+		e_wsle(void);
 	double log(double), sqrt(double);
+
 	static int i__, j;
 	static float pe;
 	static int nj, ir;
@@ -5150,11 +5194,15 @@ int hjana2_(void)
 	static int nisg;
 	static float dxmt;
 	static int ityp;
-	static float dyg2c[50], deyg2[50], dtin2[50], dmyg2[200], deyp2[50], dtpj2[50], dttg2[50], seyg2[50], dmyp2[200], stin2[50], smyg2[200],seyp2[50], snyg2[50], stpj2[50], sttg2[50], smyp2[200], snyp2[50];
+	static float dyg2c[50], deyg2[50], dtin2[50], dmyg2[200], deyp2[50], dtpj2[50], dttg2[50], seyg2[50], dmyp2[200], stin2[50], smyg2[200],
+		seyp2[50], snyg2[50], stpj2[50], sttg2[50], smyp2[200], snyp2[50];
 	static int nsubg, nisgs, nsubp, isevt, isrun;
 	extern int hjan2a_(void), hjan2b_(void);
-	static float deyg2c[50], dmyg2c[50], dnrin2[50], seyg2c[50], dnrpj2[50],dnrtg2[50], smyg2c[50], snyg2c[50], snrin2[50], dnrtt2[50],snrpj2[50], snrtg2[50], dttot2[50], snrtt2[50], sttot2[50];
+	static float deyg2c[50], dmyg2c[50], dnrin2[50], seyg2c[50], dnrpj2[50],
+		dnrtg2[50], smyg2c[50], snyg2c[50], snrin2[50], dnrtt2[50],
+		snrpj2[50], snrtg2[50], dttot2[50], snrtt2[50], sttot2[50];
 	static int nsubgs, nsubps;
+
 	static cilist io___549 = {0, 6, 0, 0, 0};
 	static cilist io___550 = {0, 6, 0, 0, 0};
 	static cilist io___551 = {0, 6, 0, 0, 0};
@@ -5284,31 +5332,23 @@ int hjana2_(void)
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 				e_wsle();
+				goto L200;
 			}
+
 			rap = log((pe + pz) / (pe - pz)) * .5f;
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = pm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			dxmt = xmt - pm;
 			iy = (int)(dabs(rap) / .2f) + 1;
 			if (iy > 50)
 			{
-				if (rap > 1.f || rap <= -1.f)
-			{
-				continue;
+				goto L100;
 			}
-            imt = (int)(dxmt / .05f) + 1;
-			if (imt > 200)
-			{
-				continue;
-			}
-			dmyp2[imt - 1] += 1.f / xmt;
-			if (ityp == 21)
-            {
-				dmyg2[imt - 1] += 1.f / xmt;
-                }
-            }
 			dyp2[iy - 1] += 1.f;
 			deyp2[iy - 1] += xmt;
 			if (ityp == 21)
@@ -5316,7 +5356,24 @@ int hjana2_(void)
 				dyg2[iy - 1] += 1.f;
 				deyg2[iy - 1] += xmt;
 			}
-			
+		L100:
+			if (rap > 1.f || rap <= -1.f)
+			{
+				goto L200;
+			}
+			imt = (int)(dxmt / .05f) + 1;
+			if (imt > 200)
+			{
+				goto L200;
+			}
+			dmyp2[imt - 1] += 1.f / xmt;
+			if (ityp == 21)
+			{
+				dmyg2[imt - 1] += 1.f / xmt;
+			}
+		L200:
+
+			;
 		}
 	}
 	i__1 = hparnt_1.ihnt2[2];
@@ -5358,30 +5415,22 @@ int hjana2_(void)
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 				e_wsle();
+				goto L400;
 			}
+
 			rap = log((pe + pz) / (pe - pz)) * .5f;
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = pm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			dxmt = xmt - pm;
 			iy = (int)(dabs(rap) / .2f) + 1;
 			if (iy > 50)
 			{
-				if (rap > 1.f || rap <= -1.f)
-			{
-				continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (imt > 200)
-			{
-				continue;
-			}
-			dmyp2[imt - 1] += 1.f / xmt;
-			if (ityp == 21)
-            {
-				dmyg2[imt - 1] += 1.f / xmt;
-			}
+				goto L300;
 			}
 			dyp2[iy - 1] += 1.f;
 			deyp2[iy - 1] += xmt;
@@ -5389,7 +5438,25 @@ int hjana2_(void)
 			{
 				dyg2[iy - 1] += 1.f;
 				deyg2[iy - 1] += xmt;
-			}		
+			}
+		L300:
+			if (rap > 1.f || rap <= -1.f)
+			{
+				goto L400;
+			}
+			imt = (int)(dxmt / .05f) + 1;
+			if (imt > 200)
+			{
+				goto L400;
+			}
+			dmyp2[imt - 1] += 1.f / xmt;
+			if (ityp == 21)
+			{
+				dmyg2[imt - 1] += 1.f / xmt;
+			}
+		L400:
+
+			;
 		}
 	}
 
@@ -5450,30 +5517,22 @@ L510:
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 				e_wsle();
+				goto L600;
 			}
+
 			rap = log((pe + pz) / (pe - pz)) * .5f;
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = pm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			dxmt = xmt - pm;
 			iy = (int)(dabs(rap) / .2f) + 1;
 			if (iy > 50)
 			{
-				if (rap > 1.f || rap <= -1.f)
-			{
-				continue;
-			}
-			imt = (int)(dxmt / .05f) + 1;
-			if (imt > 200)
-			{
-				continue;
-			}
-			dmyp2[imt - 1] += 1.f / xmt;
-			if (ityp == 21)
-			{
-				dmyg2[imt - 1] += 1.f / xmt;
-			}
+				goto L500;
 			}
 			dyp2[iy - 1] += 1.f;
 			deyp2[iy - 1] += xmt;
@@ -5482,6 +5541,24 @@ L510:
 				dyg2[iy - 1] += 1.f;
 				deyg2[iy - 1] += xmt;
 			}
+		L500:
+			if (rap > 1.f || rap <= -1.f)
+			{
+				goto L600;
+			}
+			imt = (int)(dxmt / .05f) + 1;
+			if (imt > 200)
+			{
+				goto L600;
+			}
+			dmyp2[imt - 1] += 1.f / xmt;
+			if (ityp == 21)
+			{
+				dmyg2[imt - 1] += 1.f / xmt;
+			}
+		L600:
+
+			;
 		}
 	}
 
@@ -5493,43 +5570,57 @@ L510:
 	for (i__ = 1; i__ <= i__1; ++i__)
 	{
 		j = i__;
+
 		d__1 = srec2_1.zt1[j - 1];
+
 		d__2 = srec2_1.zt2[j - 1];
 		yr = sqrt((float)(d__1 * d__1 + d__2 * d__2));
 		ir = (int)(yr / .2f) + 1;
 		if (ir > 50 || ir < 1)
 		{
-            it = (int)((float)srec2_1.ataui[j - 1] / .2f) + 1;
-            if (it > 50 || it < 1)
-            {
-                continue;
-                }
-                dtpj2[it - 1] += 1.f;
-                dttot2[it - 1] += 1.f;
-                }
-                dnrpj2[ir - 1] += 1.f;
-                dnrtt2[ir - 1] += 1.f;
+			goto L601;
+		}
+		dnrpj2[ir - 1] += 1.f;
+		dnrtt2[ir - 1] += 1.f;
+	L601:
+		it = (int)((float)srec2_1.ataui[j - 1] / .2f) + 1;
+		if (it > 50 || it < 1)
+		{
+			goto L602;
+		}
+		dtpj2[it - 1] += 1.f;
+		dttot2[it - 1] += 1.f;
+	L602:
+
+		;
 	}
 	i__1 = hparnt_1.ihnt2[2];
 	for (i__ = 1; i__ <= i__1; ++i__)
 	{
 		j = i__ + hparnt_1.ihnt2[0];
+
 		d__1 = srec2_1.zt1[j - 1];
+
 		d__2 = srec2_1.zt2[j - 1];
 		yr = sqrt((float)(d__1 * d__1 + d__2 * d__2));
 		ir = (int)(yr / .2f) + 1;
 		if (ir > 50 || ir < 1)
 		{
-            it = (int)((float)srec2_1.ataui[j - 1] / .2f) + 1;
-            if (it > 50 || it < 1)
-            {
-                continue;
-                }
-                dttg2[it - 1] += 1.f;
-                dttot2[it - 1] += 1.f;
-                }
-                dnrtg2[ir - 1] += 1.f;
-                dnrtt2[ir - 1] += 1.f;
+			goto L603;
+		}
+		dnrtg2[ir - 1] += 1.f;
+		dnrtt2[ir - 1] += 1.f;
+	L603:
+		it = (int)((float)srec2_1.ataui[j - 1] / .2f) + 1;
+		if (it > 50 || it < 1)
+		{
+			goto L604;
+		}
+		dttg2[it - 1] += 1.f;
+		dttot2[it - 1] += 1.f;
+	L604:
+
+		;
 	}
 
 L520:
@@ -5537,26 +5628,34 @@ L520:
 	for (i__ = 1; i__ <= i__1; ++i__)
 	{
 		j = i__ + hparnt_1.ihnt2[0] + hparnt_1.ihnt2[2];
+
 		if (anim_1.isoft == 3 || anim_1.isoft == 4 || anim_1.isoft == 5)
 		{
 			j = i__;
 		}
+
 		d__1 = srec2_1.zt1[j - 1];
+
 		d__2 = srec2_1.zt2[j - 1];
 		yr = sqrt((float)(d__1 * d__1 + d__2 * d__2));
 		ir = (int)(yr / .2f) + 1;
 		if (ir > 50 || ir < 1)
 		{
-            it = (int)((float)srec2_1.ataui[j - 1] / .2f) + 1;
-            if (it > 50 || it < 1)
-            {
-                continue;
-                }
-                dtin2[it - 1] += 1.f;
-                dttot2[it - 1] += 1.f;
-                }
-                dnrin2[ir - 1] += 1.f;
-                dnrtt2[ir - 1] += 1.f;
+			goto L605;
+		}
+		dnrin2[ir - 1] += 1.f;
+		dnrtt2[ir - 1] += 1.f;
+	L605:
+		it = (int)((float)srec2_1.ataui[j - 1] / .2f) + 1;
+		if (it > 50 || it < 1)
+		{
+			goto L606;
+		}
+		dtin2[it - 1] += 1.f;
+		dttot2[it - 1] += 1.f;
+	L606:
+
+		;
 	}
 	i__1 = para1_1.mul;
 	for (i__ = 1; i__ <= i__1; ++i__)
@@ -5592,29 +5691,39 @@ L520:
 			do_lio(&c__9, &c__1, " XM = ", (int)6);
 			do_lio(&c__4, &c__1, (char *)&pm, (int)sizeof(float));
 			e_wsle();
+			goto L800;
 		}
+
 		rap = log((pe + pz) / (pe - pz)) * .5f;
+
 		r__1 = px;
+
 		r__2 = py;
+
 		r__3 = pm;
 		xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 		dxmt = xmt - pm;
 		iy = (int)(dabs(rap) / .2f) + 1;
 		if (iy > 50)
 		{
-            if (rap > 1.f || rap <= -1.f)
-            {
-                continue;
-            }
-                imt = (int)(dxmt / .05f) + 1;
-                if (imt > 50)
-                {
-                    continue;
-                }
-            dmyg2c[imt - 1] += 1.f / xmt;
-        }
-        dyg2c[iy - 1] += 1.f;
-        deyg2c[iy - 1] += xmt;
+			goto L700;
+		}
+		dyg2c[iy - 1] += 1.f;
+		deyg2c[iy - 1] += xmt;
+	L700:
+		if (rap > 1.f || rap <= -1.f)
+		{
+			goto L800;
+		}
+		imt = (int)(dxmt / .05f) + 1;
+		if (imt > 50)
+		{
+			goto L800;
+		}
+		dmyg2c[imt - 1] += 1.f / xmt;
+	L800:
+
+		;
 	}
 
 	if (anim_1.isoft == 3 || anim_1.isoft == 4 || anim_1.isoft == 5)
@@ -5722,14 +5831,18 @@ int hjan2a_(void)
 {
 
 	static int iw = 0;
+
 	int i__1, i__2;
 	float r__1;
 	double d__1, d__2;
+
 	double sqrt(double);
+
 	static int i__, j, it, igx, igy;
 	static float dtg2a[50], dtp2a[50], stg2a[50], stp2a[50];
 	static int isevt, isrun;
-	static float dgxg2a[50], dgyg2a[50], dgxp2a[50], dgyp2a[50], sgxg2a[50],sgyg2a[50], sgxp2a[50], sgyp2a[50];
+	static float dgxg2a[50], dgyg2a[50], dgxp2a[50], dgyp2a[50], sgxg2a[50],
+		sgyg2a[50], sgxp2a[50], sgyp2a[50];
 
 	if (isevt == arevt_1.iaevt && isrun == arevt_1.iarun)
 	{
@@ -5770,15 +5883,19 @@ int hjan2a_(void)
 				igx = (int)((r__1 = hjcrdn_1.yp[i__ * 3 - 3], dabs(r__1)) / .2f) + 1;
 				if (igx > 50 || igx < 1)
 				{
-					igy = (int)((r__1 = hjcrdn_1.yp[i__ * 3 - 2], dabs(r__1)) / .2f) + 1;
-                    if (igy > 50 || igy < 1)
-                    {
-                        it = 1;
-                        dtp2a[it - 1] += 1.f;
-                    }
-				dgyp2a[igy - 1] += 1.f;
+					goto L100;
 				}
 				dgxp2a[igx - 1] += 1.f;
+			L100:
+				igy = (int)((r__1 = hjcrdn_1.yp[i__ * 3 - 2], dabs(r__1)) / .2f) + 1;
+				if (igy > 50 || igy < 1)
+				{
+					goto L200;
+				}
+				dgyp2a[igy - 1] += 1.f;
+			L200:
+				it = 1;
+				dtp2a[it - 1] += 1.f;
 			}
 		}
 	}
@@ -5793,15 +5910,19 @@ int hjan2a_(void)
 				igx = (int)((r__1 = hjcrdn_1.yt[i__ * 3 - 3], dabs(r__1)) / .2f) + 1;
 				if (igx > 50 || igx < 1)
 				{
-                    igy = (int)((r__1 = hjcrdn_1.yt[i__ * 3 - 2], dabs(r__1)) / .2f) + 1;
-                    if (igy > 50 || igy < 1)
-                    {
-                        it = 1;
-                        dtp2a[it - 1] += 1.f;
-				}
-				dgyp2a[igy - 1] += 1.f;
+					goto L300;
 				}
 				dgxp2a[igx - 1] += 1.f;
+			L300:
+				igy = (int)((r__1 = hjcrdn_1.yt[i__ * 3 - 2], dabs(r__1)) / .2f) + 1;
+				if (igy > 50 || igy < 1)
+				{
+					goto L400;
+				}
+				dgyp2a[igy - 1] += 1.f;
+			L400:
+				it = 1;
+				dtp2a[it - 1] += 1.f;
 			}
 		}
 	}
@@ -5813,45 +5934,76 @@ int hjan2a_(void)
 		{
 			if (hjjet2_1.k2sg[i__ + j * 150001 - 150002] != 21)
 			{
-				igx = (int)((r__1 = (hjcrdn_1.yp[hjjet2_1.iasg[i__ - 1] *3 -3] +hjcrdn_1.yt[hjjet2_1.iasg[i__ + 150000] * 3 - 3]) *.5f,dabs(r__1)) /.2f) +1;
+				igx = (int)((r__1 = (hjcrdn_1.yp[hjjet2_1.iasg[i__ - 1] *
+														 3 -
+													 3] +
+										 hjcrdn_1.yt[hjjet2_1.iasg[i__ + 150000] * 3 - 3]) *
+										.5f,
+								 dabs(r__1)) /
+								.2f) +
+					  1;
 				if (igx > 50 || igx < 1)
 				{
-					igy = (int)((r__1 = (hjcrdn_1.yp[hjjet2_1.iasg[i__ - 1] *3 -2] +hjcrdn_1.yt[hjjet2_1.iasg[i__ + 150000] * 3 - 2]) *.5f,dabs(r__1)) /.2f) +1;
-                    if (igy > 50 || igy < 1)
+					goto L500;
+				}
+				dgxp2a[igx - 1] += 1.f;
+			L500:
+				igy = (int)((r__1 = (hjcrdn_1.yp[hjjet2_1.iasg[i__ - 1] *
+														 3 -
+													 2] +
+										 hjcrdn_1.yt[hjjet2_1.iasg[i__ + 150000] * 3 - 2]) *
+										.5f,
+								 dabs(r__1)) /
+								.2f) +
+					  1;
+				if (igy > 50 || igy < 1)
 				{
-                    it = 1;
-                    dtp2a[it - 1] += 1.f;
+					goto L600;
 				}
 				dgyp2a[igy - 1] += 1.f;
-				}
-				dgxp2a[igx - 1] += 1.f;	
+			L600:
+				it = 1;
+				dtp2a[it - 1] += 1.f;
 			}
 		}
 	}
 	i__1 = para1_1.mul;
 	for (i__ = 1; i__ <= i__1; ++i__)
 	{
-		igx = (int)((r__1 = (float)prec2_1.gx5[i__ - 1], dabs(r__1)) /.2f) +1;
+		igx = (int)((r__1 = (float)prec2_1.gx5[i__ - 1], dabs(r__1)) /
+						.2f) +
+			  1;
 		if (igx > 50 || igx < 1)
 		{
-			igy = (int)((r__1 = (float)prec2_1.gy5[i__ - 1], dabs(r__1)) /.2f) +1;
-		if (igy > 50 || igy < 1)
-		{
-            d__1 = prec2_1.ft5[i__ - 1];
-            d__2 = prec2_1.gz5[i__ - 1];
-            it = (int)(sqrt((float)(d__1 * d__1 - d__2 * d__2)) / .2f) + 1;
-            if (it > 50 || it < 1)
-            {
-			continue;
-            }
-            dtg2a[it - 1] += 1.f;
-            dtp2a[it - 1] += 1.f;
-		}
-		dgyg2a[igy - 1] += 1.f;
-		dgyp2a[igy - 1] += 1.f;		
+			goto L700;
 		}
 		dgxg2a[igx - 1] += 1.f;
 		dgxp2a[igx - 1] += 1.f;
+	L700:
+		igy = (int)((r__1 = (float)prec2_1.gy5[i__ - 1], dabs(r__1)) /
+						.2f) +
+			  1;
+		if (igy > 50 || igy < 1)
+		{
+			goto L800;
+		}
+		dgyg2a[igy - 1] += 1.f;
+		dgyp2a[igy - 1] += 1.f;
+	L800:
+
+		d__1 = prec2_1.ft5[i__ - 1];
+
+		d__2 = prec2_1.gz5[i__ - 1];
+		it = (int)(sqrt((float)(d__1 * d__1 - d__2 * d__2)) / .2f) + 1;
+		if (it > 50 || it < 1)
+		{
+			goto L900;
+		}
+		dtg2a[it - 1] += 1.f;
+		dtp2a[it - 1] += 1.f;
+	L900:
+
+		;
 	}
 
 	return 0;
@@ -5861,10 +6013,13 @@ int hjan2b_(void)
 {
 
 	static int iw = 0;
+
 	int i__1;
 	float r__1, r__2;
 	double d__1, d__2;
+
 	double sqrt(double);
+
 	static int i__, j;
 	static float r0;
 	static int ir, it;
@@ -5906,18 +6061,27 @@ int hjan2b_(void)
 		ir = (int)(r0 / .2f) + 1;
 		if (ir > 50 || ir < 1)
 		{
-            d__1 = prec2_1.ft5[i__ - 1];
-            d__2 = prec2_1.gz5[i__ - 1];
-            tau7 = sqrt((float)(d__1 * d__1 - d__2 * d__2));
-            dtau = tau7 - (float)srec2_1.ataui[j - 1];
-            it = (int)(dtau / .2f) + 1;
-            if (it > 25 || it < -24)
-            {
-                continue;
-                }
-                dtg2b[it + 24] += 1.f;
-                }
-                dnrg2b[ir - 1] += 1.f;
+			goto L100;
+		}
+		dnrg2b[ir - 1] += 1.f;
+	L100:
+
+		d__1 = prec2_1.ft5[i__ - 1];
+
+		d__2 = prec2_1.gz5[i__ - 1];
+		tau7 = sqrt((float)(d__1 * d__1 - d__2 * d__2));
+		dtau = tau7 - (float)srec2_1.ataui[j - 1];
+		it = (int)(dtau / .2f) + 1;
+
+		if (it > 25 || it < -24)
+		{
+			goto L200;
+		}
+
+		dtg2b[it + 24] += 1.f;
+	L200:
+
+		;
 	}
 
 	return 0;
@@ -5925,12 +6089,17 @@ int hjan2b_(void)
 
 int hjana3_(void)
 {
+
 	static int iw = 0;
+
 	int i__1, i__2;
 	float r__1, r__2, r__3;
+
 	double sqrt(double);
-	int s_wsle(cilist *), do_lio(int *, int *, char *, int),e_wsle(void);
+	int s_wsle(cilist *), do_lio(int *, int *, char *, int),
+		e_wsle(void);
 	double log(double);
+
 	static int i__, j;
 	static float y, ee;
 	static int iy;
@@ -5939,11 +6108,13 @@ int hjana3_(void)
 	static float xmt, dxmt;
 	static int ityp;
 	static float deyh3[50], dmyh3[50], dndyh3[50];
+
 	static cilist io___626 = {0, 6, 0, 0, 0};
 	static cilist io___627 = {0, 6, 0, 0, 0};
 	static cilist io___628 = {0, 6, 0, 0, 0};
 	static cilist io___629 = {0, 6, 0, 0, 0};
 	static cilist io___630 = {0, 6, 0, 0, 0};
+
 	++iw;
 	i__1 = run_1.num;
 	for (j = 1; j <= i__1; ++j)
@@ -5954,15 +6125,18 @@ int hjana3_(void)
 			ityp = arprc1_1.ityp1[i__ + j * 150001 - 150002];
 			if (ityp > -100 && ityp < 100)
 			{
-				continue;
+				goto L200;
 			}
 			px = arprc1_1.px1[i__ + j * 150001 - 150002];
 			py = arprc1_1.py1[i__ + j * 150001 - 150002];
 			pz = arprc1_1.pz1[i__ + j * 150001 - 150002];
 			ee = arprc1_1.ee1[i__ + j * 150001 - 150002];
 			xm = arprc1_1.xm1[i__ + j * 150001 - 150002];
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = xm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			if (dabs(pz) >= ee)
@@ -5995,6 +6169,7 @@ int hjana3_(void)
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&xm, (int)sizeof(float));
 				e_wsle();
+				goto L200;
 			}
 			dxmt = xmt - xm;
 			y = log((ee + pz) / (ee - pz)) * .5f;
@@ -6002,19 +6177,25 @@ int hjana3_(void)
 			iy = (int)((y + 10.f) / .2f) + 1;
 			if (iy > 50)
 			{
-				if (y < -1.f || y >= 1.f)
+				goto L100;
+			}
+			dndyh3[iy - 1] += 1.f;
+			deyh3[iy - 1] += xmt;
+		L100:
+
+			if (y < -1.f || y >= 1.f)
 			{
-				continue;
+				goto L200;
 			}
 			imt = (int)(dxmt / .05f) + 1;
 			if (imt > 50)
 			{
-				continue;
+				goto L200;
 			}
 			dmyh3[imt - 1] += 1.f / xmt;
-			}
-			dndyh3[iy - 1] += 1.f;
-			deyh3[iy - 1] += xmt;
+		L200:
+
+			;
 		}
 	}
 
@@ -6023,12 +6204,17 @@ int hjana3_(void)
 
 int hjana4_(void)
 {
+
 	static int iw = 0;
+
 	int i__1, i__2;
 	float r__1, r__2, r__3;
+
 	double sqrt(double);
-	int s_wsle(cilist *), do_lio(int *, int *, char *, int),e_wsle(void);
+	int s_wsle(cilist *), do_lio(int *, int *, char *, int),
+		e_wsle(void);
 	double log(double);
+
 	static int i__, j;
 	static float y, ee;
 	static int iy;
@@ -6037,11 +6223,13 @@ int hjana4_(void)
 	static float xmt, dxmt;
 	static int ityp;
 	static float deyh4[50], dmyh4[50], dndyh4[50];
+
 	static cilist io___648 = {0, 6, 0, 0, 0};
 	static cilist io___649 = {0, 6, 0, 0, 0};
 	static cilist io___650 = {0, 6, 0, 0, 0};
 	static cilist io___651 = {0, 6, 0, 0, 0};
 	static cilist io___652 = {0, 6, 0, 0, 0};
+
 	++iw;
 	i__1 = run_1.num;
 	for (j = 1; j <= i__1; ++j)
@@ -6052,15 +6240,18 @@ int hjana4_(void)
 			ityp = arprc1_1.ityp1[i__ + j * 150001 - 150002];
 			if (ityp > -100 && ityp < 100)
 			{
-				continue;
+				goto L200;
 			}
 			px = arprc1_1.px1[i__ + j * 150001 - 150002];
 			py = arprc1_1.py1[i__ + j * 150001 - 150002];
 			pz = arprc1_1.pz1[i__ + j * 150001 - 150002];
 			ee = arprc1_1.ee1[i__ + j * 150001 - 150002];
 			xm = arprc1_1.xm1[i__ + j * 150001 - 150002];
+
 			r__1 = px;
+
 			r__2 = py;
+
 			r__3 = xm;
 			xmt = sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
 			if (dabs(pz) >= ee)
@@ -6093,6 +6284,7 @@ int hjana4_(void)
 				do_lio(&c__9, &c__1, " XM = ", (int)6);
 				do_lio(&c__4, &c__1, (char *)&xm, (int)sizeof(float));
 				e_wsle();
+				goto L200;
 			}
 			dxmt = xmt - xm;
 			y = log((ee + pz) / (ee - pz)) * .5f;
@@ -6100,19 +6292,25 @@ int hjana4_(void)
 			iy = (int)((y + 10.f) / .2f) + 1;
 			if (iy > 50)
 			{
-				if (y < -1.f || y >= 1.f)
+				goto L100;
+			}
+			dndyh4[iy - 1] += 1.f;
+			deyh4[iy - 1] += xmt;
+		L100:
+
+			if (y < -1.f || y >= 1.f)
 			{
-				continue;
+				goto L200;
 			}
 			imt = (int)(dxmt / .05f) + 1;
 			if (imt > 50)
 			{
-				continue;
+				goto L200;
 			}
 			dmyh4[imt - 1] += 1.f / xmt;
-			}
-			dndyh4[iy - 1] += 1.f;
-			deyh4[iy - 1] += xmt;			
+		L200:
+
+			;
 		}
 	}
 
@@ -6124,13 +6322,16 @@ int zpstrg_(void)
 
 	int i__1;
 	double d__1, d__2;
+
 	double sqrt(double);
+
 	static int i__, j;
 	static float bb;
 	static double tau7;
 	static int nstr;
 	static double shift;
 	static int istrg;
+
 	if (anim_1.isoft == 5)
 	{
 		i__1 = para1_1.mul;
@@ -6258,5 +6459,6 @@ double ranart_(int *nseed)
 	float ret_val;
 	extern double rand(int *);
 	ret_val = rand(&c__0);
+
 	return ret_val;
 }
