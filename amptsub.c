@@ -6459,8 +6459,8 @@ double ranart_(int *nseed)
 {
 
 	float ret_val;
-	extern double rand_(int *);
-	ret_val = rand_(&c__0);
+	extern double rand(int *);
+	ret_val = rand(&c__0);
 
 	return ret_val;
 }
