@@ -1,16 +1,16 @@
 #include "f2c.h"
 struct {
     int natt;
-    double eatt;
+    float eatt;
     int jatt, nt, np, n0, n01, n10, n11;
 } hmain1_;
 
 #define hmain1_1 hmain1_
 
 struct {
-    double hipr1[100];
+    float hipr1[100];
     int ihpr2[50];
-    double hint1[100];
+    float hint1[100];
     int ihnt2[50];
 } hparnt_;
 
@@ -18,17 +18,17 @@ struct {
 
 struct {
     int mstu[200];
-    double paru[200];
+    float paru[200];
     int mstj[200];
-    double parj[200];
+    float parj[200];
 } ludat1_;
 
 #define ludat1_1 ludat1_
 
 struct {
-    double arpar1[100];
+    float arpar1[100];
     int iapar2[50];
-    double arint1[100];
+    float arint1[100];
     int iaint2[50];
 } arprnt_;
 
