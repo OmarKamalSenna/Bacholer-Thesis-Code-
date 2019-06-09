@@ -1,16 +1,17 @@
 #include "f2c.h"
+#include <math.h>
 struct {
     int natt;
-    float eatt;
+    double eatt;
     int jatt, nt, np, n0, n01, n10, n11;
 } hmain1_;
 
 #define hmain1_1 hmain1_
 
 struct {
-    float hipr1[100];
+    double hipr1[100];
     int ihpr2[50];
-    float hint1[100];
+    double hint1[100];
     int ihnt2[50];
 } hparnt_;
 
@@ -18,17 +19,17 @@ struct {
 
 struct {
     int mstu[200];
-    float paru[200];
+    double paru[200];
     int mstj[200];
-    float parj[200];
+    double parj[200];
 } ludat1_;
 
 #define ludat1_1 ludat1_
 
 struct {
-    float arpar1[100];
+    double arpar1[100];
     int iapar2[50];
-    float arint1[100];
+    double arint1[100];
     int iaint2[50];
 } arprnt_;
 
@@ -160,8 +161,7 @@ static float c_b92 = .3333;
    
     static char fmt_111[] = "(a8)";
     static char fmt_50[] = "(\002 \002/11x,\002#############################"
-	    "#####################\002/1x,10x,\002#      AMPT (A Multi-Phase "
-	    "Transport) model      #\002/1x,10x,\002#               Version"
+	    "#####################\002/1x,10x,\002#      YaY (A Multi-Phase Transport) model      #\002/1x,10x,\002#               Version"
 	    " \002,a20,\002     #\002/1x,10x,\002#                10/01/2008 "
 	    "                     #\002/1x,10x,\002##########################"
 	    "########################\002/1x,10x,\002 \002)";
@@ -171,15 +171,11 @@ static float c_b92 = .3333;
     float d__1;
     olist o__1;
     cllist cl__1;
-
-   
     int f_open(olist *), s_rsle(cilist *), do_lio(int *, int *, char *, int), e_rsle(void), s_rsfe(cilist *), do_fio(int *, char *, int), e_rsfe(void), f_clos(cllist *);
     int s_copy(char *, char *, int, int);
     int s_wsfe(cilist *), e_wsfe(void), s_wsle(cilist *), e_wsle(void);
     float pow_dd(float *, float *);
     int s_stop(char *, int);
-
-   
     static int j, k;
     static double bmin, bmax;
     static char targ[8], proj[8];
@@ -192,8 +188,6 @@ static float c_b92 = .3333;
     extern int hijing_(char *, double *, double *, int);
     static int nseedr;
     extern int hijset_(double *, char *, char *, char *,int *, int *, int *, int *, int, int,int), inizpc_(void), artset_(void), artout_(int *);
-
-   
     static cilist io___1 = { 0, 24, 0, 0, 0 };
     static cilist io___2 = { 0, 24, 0, fmt_111, 0 };
     static cilist io___3 = { 0, 24, 0, fmt_111, 0 };
@@ -236,13 +230,6 @@ static float c_b92 = .3333;
     static cilist io___51 = { 0, 6, 0, 0, 0 };
     static cilist io___53 = { 0, 6, 0, 0, 0 };
     static cilist io___54 = { 0, 6, 0, 0, 0 };
-
-
-
-
-
-
-
     o__1.oerr = 0;
     o__1.ounit = 24;
     o__1.ofnmlen = 10;
