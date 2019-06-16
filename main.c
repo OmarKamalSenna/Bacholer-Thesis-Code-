@@ -154,9 +154,7 @@ static int c__3 = 3;
 static int c__5 = 5;
 static int c__9 = 9;
 static float c_b92 = .3333;
-
-
- int MAIN__(void)
+int ampt(void)
 {
    
     static char fmt_111[] = "(a8)";
@@ -253,7 +251,6 @@ static float c_b92 = .3333;
     s_rsle(&io___1);
     do_lio(&c__4, &c__1, (char *)&snn_1.efrm, (int)sizeof(double));
     e_rsle();
-
     s_rsfe(&io___2);
     do_fio(&c__1, oscar2_1.frame, (int)8);
     e_rsfe();
@@ -284,26 +281,21 @@ static float c_b92 = .3333;
     s_rsle(&io___15);
     do_lio(&c__4, &c__1, (char *)&bmax, (int)sizeof(double));
     e_rsle();
-
     s_rsle(&io___17);
     do_lio(&c__3, &c__1, (char *)&anim_1.isoft, (int)sizeof(int));
     e_rsle();
-
     s_rsle(&io___18);
     do_lio(&c__3, &c__1, (char *)&input2_1.ntmax, (int)sizeof(int));
     e_rsle();
     s_rsle(&io___19);
     do_lio(&c__4, &c__1, (char *)&input1_1.dt, (int)sizeof(double));
     e_rsle();
-
     s_rsle(&io___20);
     do_lio(&c__4, &c__1, (char *)&ludat1_1.parj[40], (int)sizeof(double));
     e_rsle();
     s_rsle(&io___21);
     do_lio(&c__4, &c__1, (char *)&ludat1_1.parj[41], (int)sizeof(double));
     e_rsle();
-
-
     s_rsle(&io___22);
     do_lio(&c__3, &c__1, (char *)&ipop, (int)sizeof(int));
     e_rsle();
@@ -314,23 +306,18 @@ static float c_b92 = .3333;
     s_rsle(&io___24);
     do_lio(&c__4, &c__1, (char *)&ludat1_1.parj[4], (int)sizeof(double));
     e_rsle();
-
     s_rsle(&io___25);
     do_lio(&c__3, &c__1, (char *)&hparnt_1.ihpr2[5], (int)sizeof(int));
     e_rsle();
-
     s_rsle(&io___26);
     do_lio(&c__3, &c__1, (char *)&hparnt_1.ihpr2[3], (int)sizeof(int));
     e_rsle();
-
     s_rsle(&io___27);
     do_lio(&c__4, &c__1, (char *)&hparnt_1.hipr1[13], (int)sizeof(double));
     e_rsle();
-
     s_rsle(&io___28);
     do_lio(&c__4, &c__1, (char *)&hparnt_1.hipr1[7], (int)sizeof(double));
     e_rsle();
-
     s_rsle(&io___29);
     do_lio(&c__5, &c__1, (char *)&para2_1.xmu, (int)sizeof(float));
     e_rsle();
@@ -340,18 +327,15 @@ static float c_b92 = .3333;
     s_rsle(&io___31);
     do_lio(&c__5, &c__1, (char *)&para2_1.alpha, (int)sizeof(float));
     e_rsle();
-
     s_rsle(&io___32);
     do_lio(&c__5, &c__1, (char *)&coal_1.dpcoal, (int)sizeof(float));
     e_rsle();
     s_rsle(&io___33);
     do_lio(&c__5, &c__1, (char *)&coal_1.drcoal, (int)sizeof(float));
     e_rsle();
-
     s_rsle(&io___34);
     do_lio(&c__3, &c__1, (char *)&ihjsed, (int)sizeof(int));
     e_rsle();
-
     s_rsle(&io___36);
     do_lio(&c__3, &c__1, (char *)&rndf77_1.nseed, (int)sizeof(int));
     e_rsle();
@@ -364,25 +348,20 @@ static float c_b92 = .3333;
     s_rsle(&io___39);
     do_lio(&c__3, &c__1, (char *)&phidcy_1.iphidcy, (int)sizeof(int));
     e_rsle();
-
     s_rsle(&io___40);
     do_lio(&c__3, &c__1, (char *)&para7_1.ioscar, (int)sizeof(int));
     e_rsle();
-
     para8_1.idpert = 0;
     para8_1.npertd = 1;
     para8_1.idxsec = 1;
-
     cl__1.cerr = 0;
     cl__1.cunit = 24;
     cl__1.csta = 0;
     f_clos(&cl__1);
-
     if (anim_1.isoft == 1) {
 	s_copy(oscar2_1.amptvn, "1.21 (Default)", (int)25, (int)14);
     } else if (anim_1.isoft == 4) {
-	s_copy(oscar2_1.amptvn, "2.21 (StringMelting)", (int)25, (int)
-		20);
+	s_copy(oscar2_1.amptvn, "2.21 (StringMelting)", (int)25, (int)20);
     } else {
 	s_copy(oscar2_1.amptvn, "Test-Only", (int)25, (int)9);
     }
@@ -392,11 +371,9 @@ static float c_b92 = .3333;
     s_wsfe(&io___42);
     do_fio(&c__1, oscar2_1.amptvn, (int)25);
     e_wsfe();
-
     if (ihjsed == 11) {
 	s_wsle(&io___43);
-	do_lio(&c__9, &c__1, "# Read in NSEED in HIJING at run time (e.g. 20"
-		"030819):", (int)54);
+	do_lio(&c__9, &c__1, "# Read in NSEED in HIJING at run time (e.g. 20030819):", (int)54);
 	e_wsle();
     }
     s_rsle(&io___44);
@@ -412,38 +389,25 @@ static float c_b92 = .3333;
     if (ihjsed == 11) {
 	s_wsle(&io___46);
 	do_lio(&c__9, &c__1, "#   read in: ", (int)13);
-	do_lio(&c__3, &c__1, (char *)&rndf77_1.nseed, (int)sizeof(int))
-		;
+	do_lio(&c__3, &c__1, (char *)&rndf77_1.nseed, (int)sizeof(int));
 	e_wsle();
 	s_wsle(&io___47);
-	do_lio(&c__9, &c__1, "# Read in NSEED in HIJING at run time:", (
-		int)38);
-	do_lio(&c__3, &c__1, (char *)&rndf77_1.nseed, (int)sizeof(int))
-		;
+	do_lio(&c__9, &c__1, "# Read in NSEED in HIJING at run time:", (int)38);
+	do_lio(&c__3, &c__1, (char *)&rndf77_1.nseed, (int)sizeof(int));
 	e_wsle();
     }
     cl__1.cerr = 0;
     cl__1.cunit = 12;
     cl__1.csta = 0;
     f_clos(&cl__1);
-
     rand(&rndf77_1.nseed);
-
-
     hparnt_1.ihpr2[9] = 1;
-
     arprnt_1.arpar1[0] = .7f;
-
-
-
     smearz_1.smearp = 0.;
     iamax = max(oscar1_1.iap,oscar1_1.iat);
     d__1 = (float) iamax;
-    smearz_1.smearh = pow_dd(&d__1, &c_b92) * 1.2 / ((float) snn_1.efrm /
-	     2 / .938);
+    smearz_1.smearh = pow_dd(&d__1, &c_b92) * 1.2 / ((float) snn_1.efrm / 2 / .938);
     anim_1.nevent = nevnt;
-
-
     o__1.oerr = 0;
     o__1.ounit = 16;
     o__1.ofnmlen = 12;
@@ -464,12 +428,7 @@ static float c_b92 = .3333;
     o__1.ofm = 0;
     o__1.oblnk = 0;
     f_open(&o__1);
-
-
-
-    hijset_(&snn_1.efrm, oscar2_1.frame, proj, targ, &oscar1_1.iap, &
-	    oscar1_1.izp, &oscar1_1.iat, &oscar1_1.izt, (int)8, (int)8, 
-	    (int)8);
+    hijset_(&snn_1.efrm, oscar2_1.frame, proj, targ, &oscar1_1.iap, &oscar1_1.izp, &oscar1_1.iat, &oscar1_1.izt, (int)8, (int)8, (int)8);
     artset_();
     inizpc_();
 
@@ -480,7 +439,7 @@ static float c_b92 = .3333;
 	for (k = 1; k <= i__2; ++k) {
 	    arevt_1.iarun = k;
 	    if (arevt_1.iaevt == nevnt && arevt_1.iarun == run_1.num) {
-		arout_1.iout = 1;
+            arout_1.iout = 1;
 	    }
 	    s_wsle(&io___51);
 	    do_lio(&c__9, &c__1, " EVENT ", (int)7);
@@ -492,33 +451,21 @@ static float c_b92 = .3333;
 L100:
 	    hijing_(oscar2_1.frame, &bmin, &bmax, (int)8);
 	    arprnt_1.iaint2[0] = hmain1_1.natt;
-
 	    getnp_();
-
-	    if (hparnt_1.ihpr2[19] == 0) {
-		goto L2000;
-	    }
-
-
-
 	    if (hmain1_1.natt == 0) {
 		++imiss;
 		if (imiss <= 20) {
 		    s_wsle(&io___53);
-		    do_lio(&c__9, &c__1, "repeated event: natt=0,j,imiss=", (
-			    int)31);
+		    do_lio(&c__9, &c__1, "repeated event: natt=0,j,imiss=", (int)31);
 		    do_lio(&c__3, &c__1, (char *)&j, (int)sizeof(int));
-		    do_lio(&c__3, &c__1, (char *)&imiss, (int)sizeof(
-			    int));
+		    do_lio(&c__3, &c__1, (char *)&imiss, (int)sizeof(int));
 		    e_wsle();
 		    goto L100;
 		} else {
 		    s_wsle(&io___54);
-		    do_lio(&c__9, &c__1, "missed event: natt=0,j=", (int)
-			    23);
+		    do_lio(&c__9, &c__1, "missed event: natt=0,j=", (int)23);
 		    do_lio(&c__3, &c__1, (char *)&j, (int)sizeof(int));
 		    e_wsle();
-		    goto L2000;
 		}
 	    }
 
@@ -526,20 +473,19 @@ L100:
 	    arini2_(&k);
 
 	}
-
 	artan1_();
 	hjana3_();
 	artmn_();
 	hjana4_();
 	artan2_();
-L2000:
-	;
     }
-
     artout_(&nevnt);
-
     s_stop("", (int)0);
     return 0;
 }
 
- int ampt_ () { MAIN__ (); return 0; }
+ int main () { 
+     printf("Hello World\n");
+     ampt (); 
+     printf("Hello World2\n");
+     return 0; }

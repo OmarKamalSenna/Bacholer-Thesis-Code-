@@ -33,7 +33,7 @@ esac
 make
 cp input.ampt ana/
 echo "#  AMPT started at " `date` > start.time
-./ampt < nseed_runtime > nohup.out
+./ana/ampt < nseed_runtime > nohup.out
 uname -n >> nohup.out
 cat start.time >> nohup.out
 rm -f start.time
